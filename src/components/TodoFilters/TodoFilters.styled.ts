@@ -3,9 +3,9 @@ import styled from "styled-components"
 export const FiltersWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
-
+  gap: 12px; 
   margin: 16px 0;
+  font-size: 18px;
 `
 
 export const ButtonsRow = styled.div`
@@ -20,7 +20,8 @@ type FilterButtonProps = {
 
 export const FilterButton = styled.button<FilterButtonProps>`
   padding: 8px 14px;
-
+  width: 135px;
+  height: 36px;
   border-radius: 8px;
   border: 1px solid
     ${({ $active, theme }) =>
@@ -44,10 +45,9 @@ export const FilterButton = styled.button<FilterButtonProps>`
 
 export const FilterSelect = styled.select`
   padding: 8px 12px;
-
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.border};
-
+  margin-left: 10px;
   background-color: ${({ theme }) => theme.input};
   color: ${({ theme }) => theme.text};
 
@@ -61,3 +61,4 @@ export const FilterSelect = styled.select`
     border-color: ${({ theme }) => theme.primary};
   }
 `
+

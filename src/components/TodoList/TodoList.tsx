@@ -9,14 +9,15 @@ import {
   getTodosFromLocalStorage,
   saveTodosToLocalStorage
 } from "../../utils/localStorage"
+import { FilterTypeEnum, SortTypeEnum } from "../TodoFilters/TodoFilters"
 
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>(() => {
     return getTodosFromLocalStorage()
   })
 
-  const [filter, setFilter] = useState<FilterType>("all")
-  const [sort, setSort] = useState<SortType>("newest")
+  const [filter, setFilter] = useState<FilterType>(FilterTypeEnum.ALL)
+  const [sort, setSort] = useState<SortType>(SortTypeEnum.NEW)
 
   useEffect(() => {
     saveTodosToLocalStorage(todos)
@@ -47,13 +48,13 @@ const TodoList = () => {
   }
 
   const filteredTodos = todos.filter((todo) => {
-    if (filter === "completed") return todo.completed
-    if (filter === "active") return !todo.completed
+    if (filter === FilterTypeEnum.COMLETED) return todo.completed
+    if (filter === FilterTypeEnum.ACTIVE) return !todo.completed
     return true
   })
 
   const visibleTodos = [...filteredTodos].sort((a, b) => {
-    if (sort === "newest") {
+    if (sort === SortTypeEnum.NEW) {
       return b.createdAt.getTime() - a.createdAt.getTime()
     }
     return a.createdAt.getTime() - b.createdAt.getTime()

@@ -1,17 +1,32 @@
+// import { FilterType } from "."
+// import { Sort } from "@mui/icons-material"
 import {
   FiltersWrapper,
   ButtonsRow,
   FilterButton,
+  FilterSelect,
 } from "./TodoFilters.styled"
 
-export type FilterType = "all" | "active" | "completed"
-export type SortType = "newest" | "oldest"
+  
+  
+  enum FilterTypeEnum {
+   ALL = "all",
+   ACTIVE = "active",
+   COMLETED = "completed"
+}
+
+
+
+ enum SortTypeEnum {
+  NEW = "new",
+  OLD = "old"
+}
 
 type TodoFiltersProps = {
-  filter: FilterType
-  sort: SortType
-  onFilterChange: (filter: FilterType) => void
-  onSortChange: (sort: SortType) => void
+  filter: FilterTypeEnum
+  sort: SortTypeEnum
+  onFilterChange: (filter: FilterTypeEnum) => void
+  onSortChange: (sort: SortTypeEnum) => void
 }
 
 const TodoFilters = ({
@@ -24,29 +39,29 @@ const TodoFilters = ({
     <FiltersWrapper>
       {/* FILTER — DROPDOWN */}
       <label>
-        Фильтр:
-        <select
+             Фильтр:
+        <FilterSelect
           value={filter}
-          onChange={(e) => onFilterChange(e.target.value as FilterType)}
+          onChange={(e) => {onFilterChange(e.target.value as FilterTypeEnum)}}
         >
-          <option value="all">Все</option>
-          <option value="active">Активные</option>
-          <option value="completed">Выполненные</option>
-        </select>
+          <option value= {FilterTypeEnum.ALL} >Все</option>
+          <option value={FilterTypeEnum.ACTIVE}>Активные</option>
+          <option value={FilterTypeEnum.COMLETED}>Выполненные</option>
+        </FilterSelect>
       </label>
 
       {/* SORT — BUTTONS */}
       <ButtonsRow>
         <FilterButton
-          $active={sort === "newest"}
-          onClick={() => onSortChange("newest")}
+          $active={sort === SortTypeEnum.NEW}
+          onClick={() => onSortChange(SortTypeEnum.NEW)}
         >
           Сначала новые
         </FilterButton>
 
         <FilterButton
-          $active={sort === "oldest"}
-          onClick={() => onSortChange("oldest")}
+          $active={sort === SortTypeEnum.OLD}
+          onClick={() => onSortChange(SortTypeEnum.OLD)}
         >
           Сначала старые
         </FilterButton>
@@ -56,3 +71,5 @@ const TodoFilters = ({
 }
 
 export default TodoFilters
+
+export{FilterTypeEnum, SortTypeEnum}

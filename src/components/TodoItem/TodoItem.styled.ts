@@ -4,6 +4,7 @@ export const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-bottom: 10px;
 
   padding: 12px;
   border-radius: 8px;
@@ -11,6 +12,8 @@ export const StyledContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.border};
 
   transition: background-color 0.2s ease;
+
+  cursor: pointer;
 
   &:hover {
     filter: brightness(0.95);
