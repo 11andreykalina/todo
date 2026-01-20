@@ -1,2 +1,2 @@
 export { default } from "./TodoFilters"
-export type { FilterType, SortType } from "./TodoFilters"
+export { FilterTypeEnum, SortTypeEnum } from "../TodoFilters/TodoFilters"

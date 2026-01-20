@@ -3,21 +3,20 @@ import { useState, useEffect } from "react"
 import AddTodo from "../AddTodo"
 import TodoItem from "../TodoItem"
 import TodoFilters from "../TodoFilters"
-import type { FilterType, SortType } from "../TodoFilters"
 import type { Todo } from "../../types"
 import {
   getTodosFromLocalStorage,
   saveTodosToLocalStorage
 } from "../../utils/localStorage"
-import { FilterTypeEnum, SortTypeEnum } from "../TodoFilters/TodoFilters"
+import { FilterTypeEnum, SortTypeEnum } from "../TodoFilters"
 
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>(() => {
     return getTodosFromLocalStorage()
   })
 
-  const [filter, setFilter] = useState<FilterType>(FilterTypeEnum.ALL)
-  const [sort, setSort] = useState<SortType>(SortTypeEnum.NEW)
+  const [filter, setFilter] = useState<FilterTypeEnum>(FilterTypeEnum.ALL)
+  const [sort, setSort] = useState<SortTypeEnum>(SortTypeEnum.NEW)
 
   useEffect(() => {
     saveTodosToLocalStorage(todos)
