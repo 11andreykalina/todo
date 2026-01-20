@@ -20,10 +20,11 @@ type FilterButtonProps = {
 
 export const FilterButton = styled.button<FilterButtonProps>`
   padding: 8px 14px;
-  width: 135px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1px solid
+  position: relative;
+  width: 100%;
+  height: 20%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
     ${({ $active, theme }) =>
       $active ? theme.primary : theme.border};
 
