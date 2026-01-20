@@ -39,7 +39,7 @@ const TodoFilters = ({
     <FiltersWrapper>
       {/* FILTER — DROPDOWN */}
       <label>
-             Фильтр:
+         Фильтр:
         <FilterSelect
           value={filter}
           onChange={(e) => {onFilterChange(e.target.value as FilterTypeEnum)}}
