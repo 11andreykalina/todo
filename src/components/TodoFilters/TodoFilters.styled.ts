@@ -51,6 +51,7 @@ export const FilterSelect = styled.select`
   background-color: ${({ theme }) => theme.input};
   color: ${({ theme }) => theme.text};
 
+  
   font-size: 14px;
   cursor: pointer;
 
