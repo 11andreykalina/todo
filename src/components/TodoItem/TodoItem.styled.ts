@@ -5,7 +5,7 @@ export const StyledContainer = styled.div`
   align-items: center;
   gap: 12px;
   margin-bottom: 10px;
-
+  
   padding: 12px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.card};
@@ -34,6 +34,10 @@ export const StyledTypography = styled.span<TypographyProps>`
   flex: 1;
   font-size: 16px;
   color: ${({ theme }) => theme.text};
+  
+  display: block;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 
   text-decoration: ${({ $completed }) =>
     $completed ? "line-through" : "none"};
