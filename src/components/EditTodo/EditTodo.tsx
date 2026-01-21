@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { StyledInput, Styled } from "./EditTodo.styled"
 import { INITIAL_NAME_VALUE } from "../../constans"
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
 
 type EditTodoProps = {
   defaultName: string
@@ -26,10 +28,10 @@ const EditTodo = ({ defaultName, onSubmit, onCancel }: EditTodoProps) => {
         onChange={(e) => setName(e.target.value)}
       />
       <Styled.SaveButton type="button" onClick={handleSubmit}>
-        Сохранить
+        <CheckCircleIcon/>
       </Styled.SaveButton>
       <Styled.CancelButton type="button" onClick={onCancel}>
-        Отмена
+        <CloseIcon/>
       </Styled.CancelButton>
     </>
   )

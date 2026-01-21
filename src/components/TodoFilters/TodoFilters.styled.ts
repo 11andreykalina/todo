@@ -20,7 +20,6 @@ type FilterButtonProps = {
 
 export const FilterButton = styled.button<FilterButtonProps>`
   padding: 8px 14px;
-  position: relative;
   width: 100%;
   height: 20%;
   word-wrap: break-word;
