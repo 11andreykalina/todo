@@ -7,6 +7,7 @@ import {
   StyledInput
 } from "./AddTodo.styled"
 import { INITIAL_NAME_VALUE } from "../../constans"
+import AddIcon from '@mui/icons-material/Add';
 
 type AddTodoProps = {
   handleAddTodo: (todo: Todo) => void
@@ -45,7 +46,7 @@ const AddTodo = ({ handleAddTodo }: AddTodoProps) => {
         onChange={handleValueChange}
       />
       <StyledAddButton onClick={onAddTodoClick}>
-        Добавить
+        <AddIcon/>
       </StyledAddButton>
     </StyledContainer>
   )

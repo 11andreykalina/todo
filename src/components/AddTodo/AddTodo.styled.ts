@@ -51,7 +51,7 @@ export const StyledAddButton = styled.button`
   border: none;
   border-radius: 10px;
 
-  font-size: 16px;
+  font-size: 11px;
   font-weight: 600;
 
   cursor: pointer;
