@@ -103,7 +103,7 @@ export default theme;`}function gy(l){return typeof l=="number"?`${(l*100).toFix
   align-items: center;
   gap: 12px;
   margin-bottom: 10px;
-
+  
   padding: 12px;
   border-radius: 8px;
   background-color: ${({theme:l})=>l.card};
@@ -124,6 +124,10 @@ export default theme;`}function gy(l){return typeof l=="number"?`${(l*100).toFix
   flex: 1;
   font-size: 16px;
   color: ${({theme:l})=>l.text};
+  
+  display: block;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 
   text-decoration: ${({$completed:l})=>l?"line-through":"none"};
   opacity: ${({$completed:l})=>l?.6:1};
