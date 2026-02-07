@@ -59,7 +59,6 @@ const TodoItem = ({ item }: TodoItemProps) => {
           {item.text}
         </StyledTypography>
 
-        {/* 👁 КНОПКА ПРОСМОТРА */}
         <StyledButton
           type="button"
           onClick={() => setIsModalOpen(true)}

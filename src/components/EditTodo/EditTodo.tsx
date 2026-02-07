@@ -25,7 +25,7 @@ const EditTodo = ({ defaultName, todoId }: EditTodoProps) => {
   const dispatch = useAppDispatch();
   const [name, setName] = useState(defaultName);
 
-  const { page, limit, filter } = useAppSelector(
+  const { page, filter } = useAppSelector(
     (state) => state.todos
   );
 
@@ -44,7 +44,6 @@ const EditTodo = ({ defaultName, todoId }: EditTodoProps) => {
     dispatch(
       loadTodos({
         page,
-        limit,
         filter,
       })
     );

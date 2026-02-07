@@ -23,10 +23,9 @@ const AddTodo = () => {
       return;
     }
 
-    // 1️⃣ создаём задачу на сервере
     await dispatch(createTodo(value));
 
-    // 2️⃣ ВСЕГДА перезагружаем первую страницу
+  
     dispatch(
       loadTodos({
         page: 1,
