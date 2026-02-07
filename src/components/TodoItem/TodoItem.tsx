@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   toggleTodo,
@@ -16,6 +17,7 @@ import {
   StyledButton,
 } from "./TodoItem.styled";
 
+import TodoModal from "../Modal/TodoModal";
 import type { Todo } from "../../types";
 
 type TodoItemProps = {
@@ -24,66 +26,63 @@ type TodoItemProps = {
 
 const TodoItem = ({ item }: TodoItemProps) => {
   const dispatch = useAppDispatch();
-
   const { page, filter } = useAppSelector(
     (state) => state.todos
   );
 
-  /*
-    Переключение completed
-  */
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleToggle = async () => {
     await dispatch(toggleTodo(item.id));
-
-    dispatch(
-      loadTodos({
-        page,
-        filter,
-      })
-    );
+    dispatch(loadTodos({ page,  filter }));
   };
 
-  /*
-    Удаление задачи
-  */
   const handleRemove = async () => {
     await dispatch(deleteTodo(item.id));
-
-    dispatch(
-      loadTodos({
-        page,
-        filter,
-      })
-    );
+    dispatch(loadTodos({ page, filter }));
   };
 
-  /*
-    Переход в режим редактирования
-  */
   const handleEdit = () => {
     dispatch(startEditTodo(item.id));
   };
 
   return (
-    <StyledContainer $editing>
-      <StyledCheckBox
-        type="checkbox"
-        checked={item.completed}
-        onChange={handleToggle}
-      />
+    <>
+      <StyledContainer $editing>
+        <StyledCheckBox
+          type="checkbox"
+          checked={item.completed}
+          onChange={handleToggle}
+        />
 
-      <StyledTypography $completed={item.completed}>
-        {item.text}
-      </StyledTypography>
+        <StyledTypography $completed={item.completed}>
+          {item.text}
+        </StyledTypography>
 
-      <StyledButton type="button" onClick={handleEdit}>
-        <EditIcon />
-      </StyledButton>
+        {/* 👁 КНОПКА ПРОСМОТРА */}
+        <StyledButton
+          type="button"
+          onClick={() => setIsModalOpen(true)}
+        >
+          👁
+        </StyledButton>
 
-      <StyledButton type="button" onClick={handleRemove}>
-        <CloseIcon />
-      </StyledButton>
-    </StyledContainer>
+        <StyledButton type="button" onClick={handleEdit}>
+          <EditIcon />
+        </StyledButton>
+
+        <StyledButton type="button" onClick={handleRemove}>
+          <CloseIcon />
+        </StyledButton>
+      </StyledContainer>
+
+      {isModalOpen && (
+        <TodoModal
+          text={item.text}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+    </>
   );
 };
 
