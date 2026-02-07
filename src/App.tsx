@@ -3,6 +3,7 @@ import "./App.css";
 import { useEffect } from "react";
 import { useAppDispatch } from "./store/hooks";
 import { loadTodos } from "./store/todoSlice";
+import { FilterTypeEnum } from "./constants";
 
 import TodoList from "./components/TodoList";
 import ThemeToggle from "./components/ThemeToggle/ThemeToggle";
@@ -17,15 +18,20 @@ const AppContent = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    dispatch(loadTodos());
+    dispatch(
+      loadTodos({
+        page: 1,
+        filter: FilterTypeEnum.ALL,
+      })
+    );
   }, [dispatch]);
 
   return (
     <StyledThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <div className="app-layout">
         <div className="app-card">
-        <ThemeToggle />
-        <TodoList />
+          <ThemeToggle />
+          <TodoList />
         </div>
       </div>
     </StyledThemeProvider>
