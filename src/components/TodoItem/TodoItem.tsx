@@ -1,59 +1,88 @@
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  toggleTodo,
+  deleteTodo,
+  startEditTodo,
+  loadTodos,
+} from "../../store/todoSlice";
 
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 
-import EditTodo from "../EditTodo";
 import {
   StyledCheckBox,
   StyledContainer,
   StyledTypography,
   StyledButton,
 } from "./TodoItem.styled";
-import { INITIAL_IS_EDIT } from "../../constans";
+
 import type { Todo } from "../../types";
 
 type TodoItemProps = {
   item: Todo;
-  onToggle: (id: string) => void;
-  onRemove: (id: string) => void;
-  onEdit: (id: string, newName: string) => void;
 };
 
-const TodoItem = ({ item, onToggle, onRemove, onEdit }: TodoItemProps) => {
-  const [isEdit, setIsEdit] = useState(INITIAL_IS_EDIT);
+const TodoItem = ({ item }: TodoItemProps) => {
+  const dispatch = useAppDispatch();
 
-  const handleSaveEdit = (newName: string) => {
-    onEdit(item.id, newName);
-    setIsEdit(false);
+  const { page, filter } = useAppSelector(
+    (state) => state.todos
+  );
+
+  /*
+    Переключение completed
+  */
+  const handleToggle = async () => {
+    await dispatch(toggleTodo(item.id));
+
+    dispatch(
+      loadTodos({
+        page,
+        filter,
+      })
+    );
+  };
+
+  /*
+    Удаление задачи
+  */
+  const handleRemove = async () => {
+    await dispatch(deleteTodo(item.id));
+
+    dispatch(
+      loadTodos({
+        page,
+        filter,
+      })
+    );
+  };
+
+  /*
+    Переход в режим редактирования
+  */
+  const handleEdit = () => {
+    dispatch(startEditTodo(item.id));
   };
 
   return (
-    <StyledContainer>
-      {isEdit ? (
-        <EditTodo
-          defaultName={item.name}
-          onSubmit={handleSaveEdit}
-          onCancel={() => setIsEdit(false)}
-        />
-      ) : (
-        <>
-          <StyledCheckBox
-            type="checkbox"
-            checked={item.completed}
-            onChange={() => onToggle(item.id)}
-          />
-          <StyledTypography $completed={item.completed}>
-            {item.name}
-          </StyledTypography>
-          <StyledButton onClick={() => setIsEdit(true)}>
-            <EditIcon />
-          </StyledButton>
-          <StyledButton onClick={() => onRemove(item.id)}>
-            <CloseIcon />
-          </StyledButton>
-        </>
-      )}
+    <StyledContainer $editing>
+      <StyledCheckBox
+        type="checkbox"
+        checked={item.completed}
+        onChange={handleToggle}
+      />
+
+      <StyledTypography $completed={item.completed}>
+        {item.text}
+      </StyledTypography>
+
+      <StyledButton type="button" onClick={handleEdit}>
+        <EditIcon />
+      </StyledButton>
+
+      <StyledButton type="button" onClick={handleRemove}>
+        <CloseIcon />
+      </StyledButton>
     </StyledContainer>
   );
 };

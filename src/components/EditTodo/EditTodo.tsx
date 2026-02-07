@@ -1,40 +1,79 @@
-import { useState } from "react"
-import { StyledInput, Styled } from "./EditTodo.styled"
-import { INITIAL_NAME_VALUE } from "../../constans"
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CloseIcon from '@mui/icons-material/Close';
+import { useState } from "react";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CloseIcon from "@mui/icons-material/Close";
+
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  updateTodo,
+  cancelEditTodo,
+  loadTodos,
+} from "../../store/todoSlice";
+
+import {
+  StyledContainer,
+  StyledButton,
+} from "../TodoItem/TodoItem.styled";
+
+import { StyledInput } from "./EditTodo.styled";
 
 type EditTodoProps = {
-  defaultName: string
-  onSubmit: (name: string) => void
-  onCancel: () => void
-}
+  defaultName: string;
+  todoId: number;
+};
 
-const EditTodo = ({ defaultName, onSubmit, onCancel }: EditTodoProps) => {
-  const [name, setName] = useState(
-    defaultName || INITIAL_NAME_VALUE
-  )
+const EditTodo = ({ defaultName, todoId }: EditTodoProps) => {
+  const dispatch = useAppDispatch();
+  const [name, setName] = useState(defaultName);
 
-  const handleSubmit = () => {
-    if (name.trim()) {
-      onSubmit(name)
+  const { page, limit, filter } = useAppSelector(
+    (state) => state.todos
+  );
+
+  const handleSave = async () => {
+    if (name.trim().length === 0) {
+      return;
     }
-  }
+
+    await dispatch(
+      updateTodo({
+        id: todoId,
+        text: name,
+      })
+    );
+
+    dispatch(
+      loadTodos({
+        page,
+        limit,
+        filter,
+      })
+    );
+
+    dispatch(cancelEditTodo());
+  };
+
+  const handleCancel = () => {
+    dispatch(cancelEditTodo());
+  };
 
   return (
-    <>
+    <StyledContainer $editing>
       <StyledInput
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(event) => {
+          setName(event.target.value);
+        }}
       />
-      <Styled.SaveButton type="button" onClick={handleSubmit}>
-        <CheckCircleIcon/>
-      </Styled.SaveButton>
-      <Styled.CancelButton type="button" onClick={onCancel}>
-        <CloseIcon/>
-      </Styled.CancelButton>
-    </>
-  )
-}
 
-export default EditTodo
+      <StyledButton type="button" onClick={handleSave}>
+        <CheckCircleIcon />
+      </StyledButton>
+
+      <StyledButton type="button" onClick={handleCancel}>
+        <CloseIcon />
+      </StyledButton>
+    </StyledContainer>
+  );
+};
+
+export default EditTodo;

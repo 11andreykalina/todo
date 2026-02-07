@@ -1,56 +1,46 @@
-// import { FilterType } from "."
-// import { Sort } from "@mui/icons-material"
 import {
   FiltersWrapper,
+  FilterSelect,
   ButtonsRow,
   FilterButton,
-  FilterSelect,
-} from "./TodoFilters.styled"
-
-  
-  
-  enum FilterTypeEnum {
-   ALL = "all",
-   ACTIVE = "active",
-   COMLETED = "completed"
-}
-
-
-
- enum SortTypeEnum {
-  NEW = "new",
-  OLD = "old"
-}
+} from "./TodoFilters.styled";
+import {
+  FilterTypeEnum,
+  SortTypeEnum,
+} from "./TodoFilters.types";
 
 type TodoFiltersProps = {
-  filter: FilterTypeEnum
-  sort: SortTypeEnum
-  onFilterChange: (filter: FilterTypeEnum) => void
-  onSortChange: (sort: SortTypeEnum) => void
-}
+  filter: FilterTypeEnum;
+  sort: SortTypeEnum;
+  onFilterChange: (filter: FilterTypeEnum) => void;
+  onSortChange: (sort: SortTypeEnum) => void;
+};
 
 const TodoFilters = ({
   filter,
   sort,
+
   onFilterChange,
   onSortChange,
 }: TodoFiltersProps) => {
   return (
     <FiltersWrapper>
-      {/* FILTER — DROPDOWN */}
+      {/* FILTER */}
       <label>
-         Фильтр:
+        Фильтр:
         <FilterSelect
           value={filter}
-          onChange={(e) => {onFilterChange(e.target.value as FilterTypeEnum)}}
+          onChange={(e) =>
+            onFilterChange(e.target.value as FilterTypeEnum)
+          }
         >
-          <option value= {FilterTypeEnum.ALL} >Все</option>
+          <option value={FilterTypeEnum.ALL}>Все</option>
           <option value={FilterTypeEnum.ACTIVE}>Активные</option>
-          <option value={FilterTypeEnum.COMLETED}>Выполненные</option>
+          <option value={FilterTypeEnum.COMPLETED}>Выполненные</option>
         </FilterSelect>
       </label>
 
-      {/* SORT — BUTTONS */}
+      {/* SORT */}
       <ButtonsRow>
         <FilterButton
           $active={sort === SortTypeEnum.NEW}
@@ -67,9 +57,7 @@ const TodoFilters = ({
         </FilterButton>
       </ButtonsRow>
     </FiltersWrapper>
-  )
-}
+  );
+};
 
-export default TodoFilters
-
-export{FilterTypeEnum, SortTypeEnum}
+export default TodoFilters;

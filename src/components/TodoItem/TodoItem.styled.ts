@@ -1,11 +1,15 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-export const StyledContainer = styled.div`
+type ContainerProps = {
+  $editing?: boolean;
+};
+
+export const StyledContainer = styled.div<ContainerProps>`
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 10px;
-  
+
   padding: 12px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.card};
@@ -13,38 +17,46 @@ export const StyledContainer = styled.div`
 
   transition: background-color 0.2s ease;
 
-  cursor: pointer;
+  cursor: ${({ $editing }) => ($editing ? "default" : "pointer")};
 
   &:hover {
-    filter: brightness(0.95);
+    ${({ $editing, theme }) =>
+      !$editing &&
+      `
+        filter: brightness(0.95);
+        background-color: ${theme.card};
+      `}
   }
-`
+`;
 
 export const StyledCheckBox = styled.input`
   width: 20px;
   height: 20px;
-  cursor: pointer;
-`
+  cursor: pointer; 
+`;
 
 type TypographyProps = {
-  $completed?: boolean
-}
+  $completed?: boolean;
+};
 
-export const StyledTypography = styled.span<TypographyProps>`
+export const StyledTypography = styled.div<TypographyProps>`
   flex: 1;
+  width: 96px;
   font-size: 16px;
   color: ${({ theme }) => theme.text};
-  
-  display: block;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   word-break: break-word;
-  overflow-wrap: anywhere;
 
   text-decoration: ${({ $completed }) =>
     $completed ? "line-through" : "none"};
   opacity: ${({ $completed }) => ($completed ? 0.6 : 1)};
+`;
 
-  transition: opacity 0.2s ease;
-`
+
 
 export const StyledButton = styled.button`
   width: 36px;
@@ -66,4 +78,4 @@ export const StyledButton = styled.button`
     background-color: ${({ theme }) => theme.primary};
     color: #fff;
   }
-`
+`;

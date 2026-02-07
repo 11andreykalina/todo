@@ -1,87 +1,76 @@
-import { TodoListContainer } from "./TodoList.styled"
-import { useState, useEffect } from "react"
-import AddTodo from "../AddTodo"
-import TodoItem from "../TodoItem"
-import TodoFilters from "../TodoFilters"
-import type { Todo } from "../../types"
-import {
-  getTodosFromLocalStorage,
-  saveTodosToLocalStorage
-} from "../../utils/localStorage"
-import { FilterTypeEnum, SortTypeEnum } from "../TodoFilters"
+import { TodoListContainer } from "./TodoList.styled";
+import TodoItem from "../TodoItem";
+import AddTodo from "../AddTodo";
+import TodoFilters from "../TodoFilters";
+import EditTodo from "../EditTodo";
+import Pagination from "../Pagination";
+
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { loadTodos, setPage, setFilter } from "../../store/todoSlice";
+import { SortTypeEnum } from "../TodoFilters";
 
 const TodoList = () => {
-  const [todos, setTodos] = useState<Todo[]>(() => {
-    return getTodosFromLocalStorage()
-  })
+  const dispatch = useAppDispatch();
 
-  const [filter, setFilter] = useState<FilterTypeEnum>(FilterTypeEnum.ALL)
-  const [sort, setSort] = useState<SortTypeEnum>(SortTypeEnum.NEW)
+  const {
+    todos,
+    loading,
+    error,
+    page,
+    totalPages,
+    filter,
+    editingTodoId,
+  } = useAppSelector((state) => state.todos);
+
+  const [sort, setSort] = useState<SortTypeEnum>(SortTypeEnum.NEW);
 
   useEffect(() => {
-    saveTodosToLocalStorage(todos)
-  }, [todos])
+    dispatch(loadTodos({ page,  filter }));
+  }, [dispatch, page, filter]);
 
-  const handleAddTodo = (todo: Todo) => {
-    setTodos((prev) => [...prev, todo])
-  }
+  const sortedTodos = [...todos].sort((a, b) => {
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
 
-  const handleEditTodo = (id: string, newName: string) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, name: newName } : todo
-      )
-    )
-  }
+    return sort === SortTypeEnum.NEW
+      ? dateB - dateA
+      : dateA - dateB;
+  });
 
-  const toggleTodoCompleted = (id: string) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    )
-  }
+  return (
+    <TodoListContainer>
+      <AddTodo />
 
-  const handleRemoveTodo = (id: string) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id))
-  }
-
-  const filteredTodos = todos.filter((todo) => {
-    if (filter === FilterTypeEnum.COMLETED) return todo.completed
-    if (filter === FilterTypeEnum.ACTIVE) return !todo.completed
-    return true
-  })
-
-  const visibleTodos = [...filteredTodos].sort((a, b) => {
-    if (sort === SortTypeEnum.NEW) {
-      return b.createdAt.getTime() - a.createdAt.getTime()
-    }
-    return a.createdAt.getTime() - b.createdAt.getTime()
-  })
-
-return (
-  <TodoListContainer>
-    <AddTodo handleAddTodo={handleAddTodo} />
-
-    <TodoFilters
-      filter={filter}
-      sort={sort}
-      onFilterChange={setFilter}
-      onSortChange={setSort}
-    />
-
-    {visibleTodos.map((todo) => (
-      <TodoItem
-        key={todo.id}
-        item={todo}
-        onToggle={toggleTodoCompleted}
-        onRemove={handleRemoveTodo}
-        onEdit={handleEditTodo}
+      <TodoFilters
+        filter={filter}
+        sort={sort}
+        onFilterChange={(value) => dispatch(setFilter(value))}
+        onSortChange={setSort}
       />
-    ))}
-  </TodoListContainer>
-)
 
-}
+      {loading && <p>Загрузка...</p>}
+      {error && <p>{error}</p>}
 
-export default TodoList
+      {sortedTodos.map((todo) =>
+        editingTodoId === todo.id ? (
+          <EditTodo
+            key={todo.id}
+            defaultName={todo.text}
+            todoId={todo.id}
+          />
+        ) : (
+          <TodoItem key={todo.id} item={todo} />
+        )
+      )}
+
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onChange={(page) => dispatch(setPage(page))}
+      />
+    </TodoListContainer>
+  );
+};
+
+export default TodoList;

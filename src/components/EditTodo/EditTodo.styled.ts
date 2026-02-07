@@ -15,7 +15,7 @@ export const SaveButton = styled.button`
   font-size: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center
 `;  
 export const CancelButton = styled.button`
   max-width: 36px;
@@ -25,7 +25,7 @@ export const CancelButton = styled.button`
   font-size: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center
 `;  
 
 export const Styled = {

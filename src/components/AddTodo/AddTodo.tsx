@@ -1,55 +1,53 @@
-import { useState } from "react"
-import { v4 as uuidv4 } from "uuid"
-import type { Todo } from "../../types"
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { createTodo, loadTodos } from "../../store/todoSlice";
+
 import {
   StyledAddButton,
   StyledContainer,
-  StyledInput
-} from "./AddTodo.styled"
-import { INITIAL_NAME_VALUE } from "../../constans"
-import AddIcon from '@mui/icons-material/Add';
+  StyledInput,
+} from "./AddTodo.styled";
 
-type AddTodoProps = {
-  handleAddTodo: (todo: Todo) => void
-}
+import AddIcon from "@mui/icons-material/Add";
+import { INITIAL_NAME_VALUE } from "../../constants";
 
-const AddTodo = ({ handleAddTodo }: AddTodoProps) => {
-  const [value, setValue] = useState(INITIAL_NAME_VALUE)
+const AddTodo = () => {
+  const [value, setValue] = useState(INITIAL_NAME_VALUE);
+  const dispatch = useAppDispatch();
 
-  const handleValueChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setValue(event.target.value)
-  }
+  const { filter } = useAppSelector((state) => state.todos);
 
-  const onAddTodoClick = () => {
+  const handleAddTodo = async () => {
     if (value.trim().length === 0) {
-      alert("Поле не может быть пустым")
-      return
+      alert("Поле не может быть пустым");
+      return;
     }
 
-    const todo: Todo = {
-      id: uuidv4(),
-      name: value,
-      completed: false,
-      createdAt: new Date()
-    }
+    // 1️⃣ создаём задачу на сервере
+    await dispatch(createTodo(value));
 
-    handleAddTodo(todo)
-    setValue(INITIAL_NAME_VALUE)
-  }
+    // 2️⃣ ВСЕГДА перезагружаем первую страницу
+    dispatch(
+      loadTodos({
+        page: 1,
+        filter,
+      })
+    );
+
+    setValue(INITIAL_NAME_VALUE);
+  };
 
   return (
     <StyledContainer>
       <StyledInput
         value={value}
-        onChange={handleValueChange}
+        onChange={(e) => setValue(e.target.value)}
       />
-      <StyledAddButton onClick={onAddTodoClick}>
-        <AddIcon/>
+      <StyledAddButton onClick={handleAddTodo}>
+        <AddIcon />
       </StyledAddButton>
     </StyledContainer>
-  )
-}
+  );
+};
 
-export default AddTodo
+export default AddTodo;
