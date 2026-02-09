@@ -2,8 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { Todo } from "../types";
 import { FilterTypeEnum } from "../constants";
+import { mockTodos } from "./mockTodos";
 
-const API_URL = "http://localhost:3001";
+const API_URL = import.meta.env.DEV
+  ? "http://localhost:3001"
+  : null;
 
 interface TodoState {
   todos: Todo[];
@@ -33,6 +36,14 @@ export const loadTodos = createAsyncThunk(
     page: number;
     filter: FilterTypeEnum;
   }) => {
+    if (!API_URL) {
+      return {
+        data: mockTodos,
+        page: 1,
+        totalPages: 1,
+      };
+    }
+
     const response = await axios.get(`${API_URL}/todos`, {
       params: {
         ...params,

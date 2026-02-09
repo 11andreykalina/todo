@@ -39,7 +39,6 @@ export const StyledPagination = styled(Pagination)`
     color: #aaa;
   }
 
-  /* анимация выбора страницы */
   @keyframes pageSelect {
     from {
       opacity: 0.6;
