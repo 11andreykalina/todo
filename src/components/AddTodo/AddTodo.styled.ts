@@ -1,13 +1,18 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const StyledContainer = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
-`
+
+  width: 100%;
+`;
+
 
 export const StyledInput = styled.input`
-  width: 100%;
+  flex: 1;
+  min-width: 0;
+
   padding: 12px 14px;
 
   background-color: ${({ theme }) => theme.input};
@@ -39,11 +44,11 @@ export const StyledInput = styled.input`
     opacity: 0.6;
     cursor: not-allowed;
   }
-`
+`;
 
 export const StyledAddButton = styled.button`
-  width: 50%;
-  padding: 12px 14px;
+  min-width: 44px;
+  padding: 12px 16px;
 
   background-color: ${({ theme }) => theme.primary};
   color: #fff;
@@ -51,8 +56,9 @@ export const StyledAddButton = styled.button`
   border: none;
   border-radius: 10px;
 
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
+  white-space: nowrap;
 
   cursor: pointer;
   transition: filter 0.2s ease;
@@ -64,5 +70,4 @@ export const StyledAddButton = styled.button`
   &:active {
     filter: brightness(0.85);
   }
-`
-
+`;

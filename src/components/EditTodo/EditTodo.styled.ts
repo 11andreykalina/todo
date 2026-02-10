@@ -1,35 +1,45 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 
-export const StyledInput = styled.input`  
-  max-width: 90px;
+export const StyledInput = styled.input`
+  flex: 1;
+  min-width: 0;
+
+  padding: 6px 8px;
+
   max-height: 36px;
+  font-size: 14px;
+
+  border-radius: 6px;
 `;
 
-export const SaveButton = styled.button`
+const IconButton = styled.button`
+  min-width: 44px;
+  min-height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  line-height: 1;
+
+  border-radius: 8px;
+  cursor: pointer;
+
+  white-space: nowrap;
+`;
+
+
+export const SaveButton = styled(IconButton)`
   margin-left: 8px;
-  width: 36px;
-  height: 36px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center
-`;  
-export const CancelButton = styled.button`
-  max-width: 36px;
-  max-height: 36px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center
-`;  
+`;
+
+
+export const CancelButton = styled(IconButton)``;
 
 export const Styled = {
   Input: StyledInput,
-  SaveButton: SaveButton,
-  CancelButton: CancelButton,
+  SaveButton,
+  CancelButton,
 };

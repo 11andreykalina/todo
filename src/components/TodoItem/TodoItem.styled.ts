@@ -8,15 +8,15 @@ export const StyledContainer = styled.div<ContainerProps>`
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 10px;
 
+  margin-bottom: 10px;
   padding: 12px;
+
   border-radius: 8px;
   background-color: ${({ theme }) => theme.card};
   border: 1px solid ${({ theme }) => theme.border};
 
   transition: background-color 0.2s ease;
-
   cursor: ${({ $editing }) => ($editing ? "default" : "pointer")};
 
   &:hover {
@@ -30,9 +30,9 @@ export const StyledContainer = styled.div<ContainerProps>`
 `;
 
 export const StyledCheckBox = styled.input`
-  width: 20px;
-  height: 20px;
-  cursor: pointer; 
+  min-width: 24px;
+  min-height: 24px;
+  cursor: pointer;
 `;
 
 type TypographyProps = {
@@ -41,13 +41,15 @@ type TypographyProps = {
 
 export const StyledTypography = styled.div<TypographyProps>`
   flex: 1;
-  width: 96px;
+  min-width: 0;
+
   font-size: 16px;
   color: ${({ theme }) => theme.text};
 
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+
   overflow: hidden;
   word-break: break-word;
 
@@ -56,17 +58,15 @@ export const StyledTypography = styled.div<TypographyProps>`
   opacity: ${({ $completed }) => ($completed ? 0.6 : 1)};
 `;
 
-
-
 export const StyledButton = styled.button`
-  width: 36px;
-  height: 36px;
+  min-width: 44px;
+  min-height: 44px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.border};
   background-color: transparent;
   color: ${({ theme }) => theme.text};

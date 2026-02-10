@@ -1,29 +1,28 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const FiltersWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px; 
+  gap: 12px;
   margin: 16px 0;
-  font-size: 18px;
-`
+`;
 
 export const ButtonsRow = styled.div`
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-`
+`;
 
 type FilterButtonProps = {
-  $active?: boolean
-}
+  $active?: boolean;
+};
 
 export const FilterButton = styled.button<FilterButtonProps>`
-  padding: 8px 14px;
-  width: 100%;
-  height: 20%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  padding: 8px 16px;
+  min-height: 40px;
+
+  border-radius: 8px;
+  border: 1px solid
     ${({ $active, theme }) =>
       $active ? theme.primary : theme.border};
 
@@ -34,24 +33,29 @@ export const FilterButton = styled.button<FilterButtonProps>`
     $active ? "#fff" : theme.text};
 
   font-size: 14px;
-  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
 
+  cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
     border-color: ${({ theme }) => theme.primary};
   }
-`
+`;
 
 export const FilterSelect = styled.select`
+  align-self: flex-start;
+
   padding: 8px 12px;
+  min-height: 40px;
+
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.border};
-  margin-left: 10px;
+
   background-color: ${({ theme }) => theme.input};
   color: ${({ theme }) => theme.text};
 
-  
   font-size: 14px;
   cursor: pointer;
 
@@ -61,5 +65,4 @@ export const FilterSelect = styled.select`
     outline: none;
     border-color: ${({ theme }) => theme.primary};
   }
-`
-
+`;

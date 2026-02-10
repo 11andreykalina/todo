@@ -1,18 +1,37 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .app-layout {
   position: relative;
-  padding: 14px 32px;
+
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+
+  padding: 16px;
   background: #111;
   color: white;
   font-size: 16px;
-  border-radius: 12px;
+
+  border-radius: 14px;
   z-index: 0;
+}
+
+@media (min-width: 768px) {
+  .app-layout {
+    padding: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-layout {
+    max-width: 960px;
+    padding: 32px;
+  }
 }
 
 .app-layout::before {
@@ -43,4 +62,3 @@
     background-position: 600% 50%;
   }
 }
-
