@@ -4,7 +4,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
-import { ThemeProvider } from "./context/ThemeContext";
+import {BrowserRouter} from "react-router-dom";
+
 
 const rootElement = document.getElementById("root");
 
@@ -14,8 +15,8 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <Provider store={store}>
-    <ThemeProvider>
+    <BrowserRouter>
       <App />
-    </ThemeProvider>
+    </BrowserRouter>
   </Provider>
 );

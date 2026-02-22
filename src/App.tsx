@@ -1,12 +1,14 @@
 import "./App.css";
 
-import { useEffect } from "react";
-import { useAppDispatch } from "./store/hooks";
-import { loadTodos } from "./store/todoSlice";
-import { FilterTypeEnum } from "./constants";
+import { Routes, Route } from "react-router-dom";
 
-import TodoList from "./components/TodoList";
-import ThemeToggle from "./components/ThemeToggle/ThemeToggle";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
+import RegisterPage from "./pages/RegisterPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
+
 
 import { ThemeProvider as AppThemeProvider } from "./context/ThemeContext";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
@@ -14,25 +16,19 @@ import { lightTheme, darkTheme } from "./theme/theme";
 import useTheme from "./context/UseTheme";
 
 const AppContent = () => {
-  const dispatch = useAppDispatch();
   const { theme } = useTheme();
-
-
-  useEffect(() => {
-    dispatch(
-      loadTodos({
-        page: 1,
-        filter: FilterTypeEnum.ALL,
-      })
-    );
-  }, [dispatch]);
 
   return (
     <StyledThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <div className="app-layout">
         <div className="app-card">
-          <ThemeToggle />
-          <TodoList />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
         </div>
       </div>
     </StyledThemeProvider>

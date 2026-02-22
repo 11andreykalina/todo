@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 import type { Todo } from "../types";
 import { FilterTypeEnum } from "../constants";
 
-const API_URL = "https://todo-api-server-ixbr.onrender.com";
+const API_URL = "http://localhost:3001";
 
 interface TodoState {
   todos: Todo[];
@@ -33,7 +33,7 @@ export const loadTodos = createAsyncThunk(
     page: number;
     filter: FilterTypeEnum;
   }) => {
-    const response = await axios.get(`${API_URL}/todos`, {
+    const response = await api.get(`${API_URL}/todos`, {
       params: {
         ...params,
         limit: 4,
@@ -47,7 +47,7 @@ export const loadTodos = createAsyncThunk(
 export const createTodo = createAsyncThunk(
   "todos/createTodo",
   async (text: string) => {
-    const response = await axios.post(`${API_URL}/todos`, { text });
+    const response = await api.post(`${API_URL}/todos`, { text });
     return response.data as Todo;
   }
 );
@@ -55,7 +55,7 @@ export const createTodo = createAsyncThunk(
 export const toggleTodo = createAsyncThunk(
   "todos/toggleTodo",
   async (id: number) => {
-    const response = await axios.patch(
+    const response = await api.patch(
       `${API_URL}/todos/${id}/toggle`
     );
     return response.data as Todo;
@@ -65,7 +65,7 @@ export const toggleTodo = createAsyncThunk(
 export const updateTodo = createAsyncThunk(
   "todos/updateTodo",
   async (params: { id: number; text: string }) => {
-    const response = await axios.put(
+    const response = await api.put(
       `${API_URL}/todos/${params.id}`,
       { text: params.text }
     );
@@ -76,7 +76,7 @@ export const updateTodo = createAsyncThunk(
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
   async (id: number) => {
-    await axios.delete(`${API_URL}/todos/${id}`);
+    await api.delete(`${API_URL}/todos/${id}`);
     return id;
   }
 );
