@@ -65,10 +65,24 @@
     #ff0080,
     #7928ca,
     #2afadf,
-    #ff0080
+    #ff0080,
+    #7928ca,
+    #2afadf,
+    #ff0080,
+    #7928ca,
+    #2afadf,
+    #ff0080,
+    #7928ca,
+    #2afadf,
+    #ff0080,
+    #7928ca,
+    #2afadf,
+    #ff0080,
+    #7928ca,
+    #2afadf
   );
   background-size: 600% 600%;
-  animation: borderMove 30s linear infinite;
+  animation: borderMove 160s linear infinite;
 
   filter: blur(6px);
   z-index: -1;

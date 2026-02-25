@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useAppDispatch } from "../store/hooks";
-import { loginUser, fetchCurrentUser } from "../store/authSlice";
-import { useNavigate } from "react-router-dom";
+import { loginUser, fetchCurrentUser,clearError } from "../store/authSlice";
+import { useNavigate, Link } from "react-router-dom";
+import { useAppSelector } from "../store/hooks";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
+  const authError = useAppSelector((state) => state.auth.error);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -40,7 +42,10 @@ const LoginPage = () => {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              dispatch(clearError());
+               setEmail(e.target.value)
+            }}
           />
         </div>
 
@@ -49,11 +54,18 @@ const LoginPage = () => {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              dispatch(clearError());
+              setPassword(e.target.value);
+            }}
           />
         </div>
 
         <button type="submit">Login</button>
+        {authError && <p className="error">{authError}</p>}
+        <p> 
+          Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
+        </p>
       </form>
     </div>
   );
