@@ -1,33 +1,33 @@
 import {
   FiltersWrapper,
+  FilterBlock,
+  FilterLabel,
   FilterSelect,
-  ButtonsRow,
-  FilterButton,
+  SortRow,
+  SortButton,
 } from "./TodoFilters.styled";
-import {
-  FilterTypeEnum,
-  SortTypeEnum,
-} from "./TodoFilters.types";
 
-type TodoFiltersProps = {
+import { FilterTypeEnum } from "@/constants";
+import { SortTypeEnum } from "./TodoFilters.types";
+
+type Props = {
   filter: FilterTypeEnum;
   sort: SortTypeEnum;
-  onFilterChange: (filter: FilterTypeEnum) => void;
-  onSortChange: (sort: SortTypeEnum) => void;
+  onFilterChange: (value: FilterTypeEnum) => void;
+  onSortChange: (value: SortTypeEnum) => void;
 };
 
 const TodoFilters = ({
   filter,
   sort,
-
   onFilterChange,
   onSortChange,
-}: TodoFiltersProps) => {
+}: Props) => {
   return (
     <FiltersWrapper>
-      {/* FILTER */}
-      <label>
-        Фильтр:
+      <FilterBlock>
+        <FilterLabel>Фильтр</FilterLabel>
+
         <FilterSelect
           value={filter}
           onChange={(e) =>
@@ -36,26 +36,27 @@ const TodoFilters = ({
         >
           <option value={FilterTypeEnum.ALL}>Все</option>
           <option value={FilterTypeEnum.ACTIVE}>Активные</option>
-          <option value={FilterTypeEnum.COMPLETED}>Выполненные</option>
+          <option value={FilterTypeEnum.COMPLETED}>
+            Выполненные
+          </option>
         </FilterSelect>
-      </label>
+      </FilterBlock>
 
-      {/* SORT */}
-      <ButtonsRow>
-        <FilterButton
+      <SortRow>
+        <SortButton
           $active={sort === SortTypeEnum.NEW}
           onClick={() => onSortChange(SortTypeEnum.NEW)}
         >
           Сначала новые
-        </FilterButton>
+        </SortButton>
 
-        <FilterButton
+        <SortButton
           $active={sort === SortTypeEnum.OLD}
           onClick={() => onSortChange(SortTypeEnum.OLD)}
         >
           Сначала старые
-        </FilterButton>
-      </ButtonsRow>
+        </SortButton>
+      </SortRow>
     </FiltersWrapper>
   );
 };

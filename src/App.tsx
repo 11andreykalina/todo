@@ -17,6 +17,8 @@ import RegisterPage from "@/pages/Register/RegisterPage";
 import ProfilePage from "@/pages/Profile/ProfilePage";
 import NotFoundPage from "@/pages/NotFound/NotFoundPage";
 
+import { MobileFix } from "@/shared/styles/mobileFix"; 
+
 import styled from "styled-components";
 
 const AppShell = styled.div`
@@ -37,49 +39,52 @@ function App() {
 
   useEffect(() => {
     if (accessToken) {
-      dispatch(fetchUserProfile ());
+      dispatch(fetchUserProfile());
     }
   }, [dispatch, accessToken]);
 
   return (
     <StyledThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-      <AppShell>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <GuestRoute>
-                <LoginPage />
-              </GuestRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <GuestRoute>
-                <RegisterPage />
-              </GuestRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </AppShell>
+      <>
+        <MobileFix />
+        <AppShell>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <HomePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <GuestRoute>
+                  <LoginPage />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <GuestRoute>
+                  <RegisterPage />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </AppShell>
+      </>
     </StyledThemeProvider>
   );
 }

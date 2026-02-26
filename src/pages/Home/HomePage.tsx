@@ -9,7 +9,6 @@ import SwitchUserButton from "@/components/auth/SwitchUserButton/SwitchUserButto
 import {
   PageWrapper,
   Header,
-  Title,
   Section,
 } from "./HomePage.styled";
 
@@ -20,7 +19,6 @@ const HomePage = () => {
         <PageWrapper>
           <Stack gap={32}>
             <Header>
-              <Title>Мои задачи</Title>
 
               <Stack direction="row" gap={12}>
                 <ThemeToggle />

@@ -3,26 +3,48 @@ import styled from "styled-components";
 export const FiltersWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
+  margin-top: 18px;
 `;
 
-export const ButtonsRow = styled.div`
+export const FilterBlock = styled.div`
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 6px;
+`;
 
-  @media (max-width: 480px) {
-    flex-direction: column;
+export const FilterLabel = styled.span`
+  font-size: 16px;
+  opacity: 0.65;
+  color: ${({ theme }) => theme.text};
+`;
+
+export const FilterSelect = styled.select`
+  height: 44px;
+  padding: 0 12px;
+
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.border};
+
+  background-color: ${({ theme }) => theme.input};
+  color: ${({ theme }) => theme.text};
+
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.primary};
   }
 `;
 
-type FilterButtonProps = {
-  $active?: boolean;
-};
+export const SortRow = styled.div`
+  display: flex;
+  gap: 8px;
+`;
 
-export const FilterButton = styled.button<FilterButtonProps>`
-  height: 48px;
-  padding: 0 20px;
+export const SortButton = styled.button<{ $active?: boolean }>`
+  flex: 1;
+  height: 42px;
 
   border-radius: 12px;
   border: 1px solid
@@ -36,42 +58,10 @@ export const FilterButton = styled.button<FilterButtonProps>`
     $active ? "#fff" : theme.text};
 
   font-size: 14px;
-  font-weight: 500;
-  white-space: nowrap;
-
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: 0.2s ease;
 
   &:hover {
     border-color: ${({ theme }) => theme.primary};
-  }
-
-  @media (max-width: 480px) {
-    width: 100%;
-  }
-`;
-
-export const FilterSelect = styled.select`
-  height: 48px;
-  padding: 0 16px;
-
-  border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.border};
-
-  background-color: ${({ theme }) => theme.input};
-  color: ${({ theme }) => theme.text};
-
-  font-size: 14px;
-  cursor: pointer;
-
-  transition: border-color 0.2s ease;
-
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.primary};
-  }
-
-  @media (max-width: 480px) {
-    width: 100%;
   }
 `;

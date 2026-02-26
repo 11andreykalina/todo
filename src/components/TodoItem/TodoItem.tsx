@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useAppDispatch } from "@/app/store/hooks";
-import { toggleTodo, startEdit } from "@/domains/todo/model/todoSlice";
+import type { Todo } from "@/types";
 
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,11 +12,12 @@ import {
 } from "./TodoItem.styled";
 
 import TodoModal from "../Modal/TodoModal";
-import type { Todo } from "@/types";
+import { useAppDispatch } from "@/app/store/hooks";
+import { toggleTodo, startEdit } from "@/domains/todo/model/todoSlice";
 
 type TodoItemProps = {
   item: Todo;
-  onDelete: () => Promise<void>;
+  onDelete: (id: number) => Promise<void>;
 };
 
 const TodoItem = ({ item, onDelete }: TodoItemProps) => {
@@ -26,6 +26,10 @@ const TodoItem = ({ item, onDelete }: TodoItemProps) => {
 
   const handleToggle = async () => {
     await dispatch(toggleTodo(item.id));
+  };
+
+  const handleRemove = async () => {
+    await onDelete(item.id);
   };
 
   const handleEdit = () => {
@@ -45,10 +49,7 @@ const TodoItem = ({ item, onDelete }: TodoItemProps) => {
           {item.text}
         </StyledTypography>
 
-        <StyledButton
-          type="button"
-          onClick={() => setIsModalOpen(true)}
-        >
+        <StyledButton type="button" onClick={() => setIsModalOpen(true)}>
           👁
         </StyledButton>
 
@@ -56,7 +57,7 @@ const TodoItem = ({ item, onDelete }: TodoItemProps) => {
           <EditIcon />
         </StyledButton>
 
-        <StyledButton type="button" onClick={onDelete}>
+        <StyledButton type="button" onClick={handleRemove}>
           <CloseIcon />
         </StyledButton>
       </StyledContainer>

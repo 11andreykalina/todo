@@ -1,11 +1,11 @@
-import { TodoListContainer } from "./TodoList.styled";
+import { useEffect, useState } from "react";
+
 import TodoItem from "../TodoItem";
 import AddTodo from "../AddTodo";
-import TodoFilters from "../TodoFilters";
+import TodoFilters, { SortTypeEnum } from "../TodoFilters";
 import EditTodo from "../EditTodo";
 import Pagination from "../Pagination";
 
-import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 import {
   fetchTodos,
@@ -14,7 +14,12 @@ import {
   createTodo,
   deleteTodo,
 } from "@/domains/todo/model/todoSlice";
-import { SortTypeEnum } from "../TodoFilters";
+
+import {
+  TodoListContainer,
+  TodosWrapper,
+  LoadingOverlay,
+} from "./TodoList.styled";
 
 const TodoList = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +34,9 @@ const TodoList = () => {
     editingId,
   } = useAppSelector((state) => state.todo);
 
-  const [sort, setSort] = useState<SortTypeEnum>(SortTypeEnum.NEW);
+  const [sort, setSort] = useState<SortTypeEnum>(
+    SortTypeEnum.NEW
+  );
 
   useEffect(() => {
     dispatch(fetchTodos());
@@ -55,39 +62,46 @@ const TodoList = () => {
   });
 
   return (
+    
     <TodoListContainer>
+      {loading && <LoadingOverlay>Загрузка...</LoadingOverlay>}
       <AddTodo onCreate={handleCreate} />
 
       <TodoFilters
         filter={filter}
         sort={sort}
-        onFilterChange={(value) => dispatch(setFilter(value))}
+        onFilterChange={(value) =>
+          dispatch(setFilter(value))
+        }
         onSortChange={setSort}
       />
 
-      {loading && <p>Загрузка...</p>}
       {error && <p>{error}</p>}
 
-      {sortedTodos.map((todo) =>
-        editingId === todo.id ? (
-          <EditTodo
-            key={todo.id}
-            defaultName={todo.text}
-            todoId={todo.id}
-          />
-        ) : (
-          <TodoItem
-            key={todo.id}
-            item={todo}
-            onDelete={() => handleDelete(todo.id)}
-          />
-        )
-      )}
+      <TodosWrapper>
+        {sortedTodos.map((todo) =>
+          editingId === todo.id ? (
+            <EditTodo
+              key={todo.id}
+              defaultName={todo.text}
+              todoId={todo.id}
+            />
+          ) : (
+            <TodoItem
+              key={todo.id}
+              item={todo}
+              onDelete={handleDelete}
+            />
+          )
+        )}
+      </TodosWrapper>
 
       <Pagination
         page={page}
         totalPages={totalPages}
-        onChange={(page) => dispatch(setPage(page))}
+        onChange={(page) =>
+          dispatch(setPage(page))
+        }
       />
     </TodoListContainer>
   );
