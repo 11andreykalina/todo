@@ -1,11 +1,6 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import {
-  toggleTodo,
-  deleteTodo,
-  startEditTodo,
-  loadTodos,
-} from "../../store/todoSlice";
+import { useAppDispatch } from "@/app/store/hooks";
+import { toggleTodo, startEdit } from "@/domains/todo/model/todoSlice";
 
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
@@ -18,37 +13,28 @@ import {
 } from "./TodoItem.styled";
 
 import TodoModal from "../Modal/TodoModal";
-import type { Todo } from "../../types";
+import type { Todo } from "@/types";
 
 type TodoItemProps = {
   item: Todo;
+  onDelete: () => Promise<void>;
 };
 
-const TodoItem = ({ item }: TodoItemProps) => {
+const TodoItem = ({ item, onDelete }: TodoItemProps) => {
   const dispatch = useAppDispatch();
-  const { page, filter } = useAppSelector(
-    (state) => state.todos
-  );
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleToggle = async () => {
     await dispatch(toggleTodo(item.id));
-    dispatch(loadTodos({ page,  filter }));
-  };
-
-  const handleRemove = async () => {
-    await dispatch(deleteTodo(item.id));
-    dispatch(loadTodos({ page, filter }));
   };
 
   const handleEdit = () => {
-    dispatch(startEditTodo(item.id));
+    dispatch(startEdit(item.id));
   };
 
   return (
     <>
-      <StyledContainer $editing>
+      <StyledContainer>
         <StyledCheckBox
           type="checkbox"
           checked={item.completed}
@@ -70,7 +56,7 @@ const TodoItem = ({ item }: TodoItemProps) => {
           <EditIcon />
         </StyledButton>
 
-        <StyledButton type="button" onClick={handleRemove}>
+        <StyledButton type="button" onClick={onDelete}>
           <CloseIcon />
         </StyledButton>
       </StyledContainer>

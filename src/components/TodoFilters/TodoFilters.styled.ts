@@ -3,14 +3,17 @@ import styled from "styled-components";
 export const FiltersWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin: 16px 0;
+  gap: 16px;
 `;
 
 export const ButtonsRow = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 type FilterButtonProps = {
@@ -18,10 +21,10 @@ type FilterButtonProps = {
 };
 
 export const FilterButton = styled.button<FilterButtonProps>`
-  padding: 8px 16px;
-  min-height: 40px;
+  height: 48px;
+  padding: 0 20px;
 
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid
     ${({ $active, theme }) =>
       $active ? theme.primary : theme.border};
@@ -42,15 +45,17 @@ export const FilterButton = styled.button<FilterButtonProps>`
   &:hover {
     border-color: ${({ theme }) => theme.primary};
   }
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
 `;
 
 export const FilterSelect = styled.select`
-  align-self: flex-start;
+  height: 48px;
+  padding: 0 16px;
 
-  padding: 8px 12px;
-  min-height: 40px;
-
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.border};
 
   background-color: ${({ theme }) => theme.input};
@@ -64,5 +69,9 @@ export const FilterSelect = styled.select`
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.primary};
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
   }
 `;

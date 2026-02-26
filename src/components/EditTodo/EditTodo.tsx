@@ -2,12 +2,11 @@ import { useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "@/app/store/hooks";
 import {
   updateTodo,
-  cancelEditTodo,
-  loadTodos,
-} from "../../store/todoSlice";
+  cancelEdit,
+} from "@/domains/todo/model/todoSlice";
 
 import {
   StyledContainer,
@@ -25,14 +24,8 @@ const EditTodo = ({ defaultName, todoId }: EditTodoProps) => {
   const dispatch = useAppDispatch();
   const [name, setName] = useState(defaultName);
 
-  const { page, filter } = useAppSelector(
-    (state) => state.todos
-  );
-
   const handleSave = async () => {
-    if (name.trim().length === 0) {
-      return;
-    }
+    if (name.trim().length === 0) return;
 
     await dispatch(
       updateTodo({
@@ -40,23 +33,14 @@ const EditTodo = ({ defaultName, todoId }: EditTodoProps) => {
         text: name,
       })
     );
-
-    dispatch(
-      loadTodos({
-        page,
-        filter,
-      })
-    );
-
-    dispatch(cancelEditTodo());
   };
 
   const handleCancel = () => {
-    dispatch(cancelEditTodo());
+    dispatch(cancelEdit());
   };
 
   return (
-    <StyledContainer $editing>
+    <StyledContainer>
       <StyledInput
         value={name}
         onChange={(event) => {

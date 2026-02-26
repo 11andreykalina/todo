@@ -1,7 +1,7 @@
 import axios from "axios";
-import type { Todo } from "../types";
+import type { Todo } from "../../types";
 
-const API_URL = "http://localhost:3001";
+const API_URL = "https://server-todo-dxd5.onrender.com";
 
 /*
   Получение списка todos

@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { createTodo, loadTodos } from "../../store/todoSlice";
 
 import {
   StyledAddButton,
@@ -9,13 +7,14 @@ import {
 } from "./AddTodo.styled";
 
 import AddIcon from "@mui/icons-material/Add";
-import { INITIAL_NAME_VALUE } from "../../constants";
+import { INITIAL_NAME_VALUE } from "@/constants";
 
-const AddTodo = () => {
+interface AddTodoProps {
+  onCreate: (text: string) => Promise<void>;
+}
+
+const AddTodo = ({ onCreate }: AddTodoProps) => {
   const [value, setValue] = useState(INITIAL_NAME_VALUE);
-  const dispatch = useAppDispatch();
-
-  const { filter } = useAppSelector((state) => state.todos);
 
   const handleAddTodo = async () => {
     if (value.trim().length === 0) {
@@ -23,16 +22,7 @@ const AddTodo = () => {
       return;
     }
 
-    await dispatch(createTodo(value));
-
-  
-    dispatch(
-      loadTodos({
-        page: 1,
-        filter,
-      })
-    );
-
+    await onCreate(value);
     setValue(INITIAL_NAME_VALUE);
   };
 
@@ -41,6 +31,7 @@ const AddTodo = () => {
       <StyledInput
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        placeholder="Введите задачу..."
       />
       <StyledAddButton onClick={handleAddTodo}>
         <AddIcon />

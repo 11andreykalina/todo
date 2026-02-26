@@ -9,29 +9,33 @@ export const StyledContainer = styled.div<ContainerProps>`
   align-items: center;
   gap: 12px;
 
-  margin-bottom: 10px;
-  padding: 12px;
+  height: 56px;
+  padding: 0 16px;
 
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: ${({ theme }) => theme.card};
   border: 1px solid ${({ theme }) => theme.border};
 
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, border 0.2s ease;
   cursor: ${({ $editing }) => ($editing ? "default" : "pointer")};
 
   &:hover {
     ${({ $editing, theme }) =>
       !$editing &&
       `
-        filter: brightness(0.95);
-        background-color: ${theme.card};
+        border-color: ${theme.primary};
       `}
+  }
+
+  @media (max-width: 480px) {
+    height: 52px;
+    padding: 0 12px;
   }
 `;
 
 export const StyledCheckBox = styled.input`
-  min-width: 24px;
-  min-height: 24px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 `;
 
@@ -43,15 +47,12 @@ export const StyledTypography = styled.div<TypographyProps>`
   flex: 1;
   min-width: 0;
 
-  font-size: 16px;
+  font-size: 15px;
   color: ${({ theme }) => theme.text};
 
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-
+  white-space: nowrap;
   overflow: hidden;
-  word-break: break-word;
+  text-overflow: ellipsis;
 
   text-decoration: ${({ $completed }) =>
     $completed ? "line-through" : "none"};
@@ -59,20 +60,20 @@ export const StyledTypography = styled.div<TypographyProps>`
 `;
 
 export const StyledButton = styled.button`
-  min-width: 44px;
-  min-height: 44px;
+  width: 40px;
+  height: 40px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.border};
   background-color: transparent;
   color: ${({ theme }) => theme.text};
 
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 
   &:hover {
     background-color: ${({ theme }) => theme.primary};
