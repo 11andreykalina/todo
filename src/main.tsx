@@ -15,7 +15,7 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <Provider store={store}>
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/todo">
         <App />
       </BrowserRouter>
     </ThemeProvider>
