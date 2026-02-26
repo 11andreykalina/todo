@@ -8,7 +8,7 @@ export const StyledContainer = styled.div<ContainerProps>`
   display: flex;
   align-items: center;
   gap: 12px;
-
+  width: 100%;
   height: 56px;
   padding: 0 16px;
 

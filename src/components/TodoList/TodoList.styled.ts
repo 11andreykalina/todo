@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const TodoListContainer = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 export const TodosWrapper = styled.div`
@@ -12,7 +15,9 @@ export const TodosWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+  @media (max-width: 430px) {
   min-height: 260px;
+}
 `;
 
 export const LoadingOverlay = styled.div`
