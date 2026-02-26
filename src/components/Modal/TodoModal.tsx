@@ -4,7 +4,7 @@ import {
   Title,
   Content,
   CloseModal,
-} from "./TodoModal.styled.t.ts";
+} from "./TodoModal.styled";
 
 type TodoModalProps = {
   text: string;

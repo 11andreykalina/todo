@@ -9,7 +9,8 @@ const API_URL = "https://server-todo-dxd5.onrender.com";
 */
 export const fetchTodos = async () => {
   const response = await axios.get(`${API_URL}/todos`);
-  return response.data.data as Todo[];
+  const data = response.data as { data: Todo[] };
+return data.data;
 };
 
 /*
