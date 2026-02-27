@@ -23,6 +23,7 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,18 +42,36 @@ const LoginPage = () => {
                 <Input
                   type="email"
                   placeholder="Email"
+                  
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
 
                 <Input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Пароль"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  
                 />
+                 <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    style={{
+                      
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      fontSize: "16px",
+                    }}
+                  >
+                    Показать пароль?{showPassword ? "🙈" : "👁"}
+                  </button>
 
                 <Button type="submit" disabled={status === "loading"}>
                   {status === "loading" ? "Вход..." : "Войти"}

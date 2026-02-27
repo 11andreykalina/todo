@@ -24,16 +24,33 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const validatePassword = (value: string) => {
+    if (value.length < 6) return "Минимум 6 символов";
+    if (value.length > 12) return "Максимум 12 символов";
+    if (!/[a-z]/.test(value)) return "Добавьте маленькую букву";
+    if (!/[A-Z]/.test(value)) return "Добавьте большую букву";
+    if (!/[0-9]/.test(value)) return "Добавьте цифру";
+    if (!/[!@#$%^&*]/.test(value)) return "Добавьте спецсимвол";
+    return null;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const validationError = validatePassword(password);
+    setPasswordError(validationError);
+
+    if (validationError) return;
 
     dispatch(
       registerUser({
         email,
         password,
         age: age ? Number(age) : undefined,
-      })
+      }),
     );
   };
 
@@ -54,14 +71,36 @@ const RegisterPage = () => {
                   required
                 />
 
-                <Input
-                  type="password"
-                  placeholder="Пароль (мин. 6 символов)"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  minLength={6}
-                />
+                <div style={{ position: "relative" }}>
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Пароль (мин. 6 символов)"
+                    value={password}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setPassword(value);
+                      setPasswordError(validatePassword(value));
+                    }}
+                    required
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  style={{
+                    
+
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                  }}
+                >
+                  Показать пароль?{showPassword ? "🙈" : "👁"}
+                </button>
+                {passwordError && <ErrorText>{passwordError}</ErrorText>}
 
                 <Input
                   type="number"
@@ -70,7 +109,10 @@ const RegisterPage = () => {
                   onChange={(e) => setAge(e.target.value)}
                 />
 
-                <Button type="submit" disabled={status === "loading"}>
+                <Button
+                  type="submit"
+                  disabled={status === "loading" || !!passwordError}
+                >
                   {status === "loading"
                     ? "Регистрация..."
                     : "Зарегистрироваться"}

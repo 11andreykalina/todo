@@ -58,7 +58,13 @@ export const Button = styled.button`
 `;
 
 export const ErrorText = styled.p`
-  color: #ff4d4f;
+  padding: 12px 16px;
+  border-radius: 12px;
+
+  background: rgba(255, 0, 0, 0.08);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+
+  color: #ff6b6b;
   font-size: 14px;
 `;
 

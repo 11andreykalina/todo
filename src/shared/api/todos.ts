@@ -3,19 +3,12 @@ import type { Todo } from "../../types";
 
 const API_URL = "https://server-todo-dxd5.onrender.com";
 
-/*
-  Получение списка todos
-  Сервер возвращает объект { data, total, ... }
-*/
 export const fetchTodos = async () => {
   const response = await axios.get(`${API_URL}/todos`);
   const data = response.data as { data: Todo[] };
 return data.data;
 };
 
-/*
-  Создание todo
-*/
 export const createTodoRequest = async (text: string) => {
   const response = await axios.post(`${API_URL}/todos`, {
     text: text,
@@ -24,10 +17,6 @@ export const createTodoRequest = async (text: string) => {
   return response.data as Todo;
 };
 
-/*
-  Toggle completed
-  ВАЖНО: используем /toggle
-*/
 export const toggleTodoRequest = async (id: number) => {
   const response = await axios.patch(
     `${API_URL}/todos/${id}/toggle`
@@ -36,9 +25,6 @@ export const toggleTodoRequest = async (id: number) => {
   return response.data as Todo;
 };
 
-/*
-  Удаление todo
-*/
 export const deleteTodoRequest = async (id: number) => {
   await axios.delete(`${API_URL}/todos/${id}`);
 };
