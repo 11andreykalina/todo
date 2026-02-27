@@ -71,7 +71,7 @@ const RegisterPage = () => {
                   required
                 />
 
-                <div style={{ position: "relative" }}>
+              
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Пароль (мин. 6 символов)"
@@ -83,7 +83,7 @@ const RegisterPage = () => {
                     }}
                     required
                   />
-                </div>
+               
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
