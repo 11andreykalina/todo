@@ -24,7 +24,7 @@ const AddTodo = ({ onCreate, disabled }: AddTodoProps) => {
       return;
     }
 
-    if (submitting) return; // ← защита от быстрого клика
+    if (submitting) return;
 
     try {
       setSubmitting(true);
