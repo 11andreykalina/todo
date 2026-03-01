@@ -11,10 +11,12 @@ import { INITIAL_NAME_VALUE } from "@/constants";
 
 interface AddTodoProps {
   onCreate: (text: string) => Promise<void>;
+  disabled?: boolean;
 }
 
-const AddTodo = ({ onCreate }: AddTodoProps) => {
+const AddTodo = ({ onCreate, disabled }: AddTodoProps) => {
   const [value, setValue] = useState(INITIAL_NAME_VALUE);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleAddTodo = async () => {
     if (value.trim().length === 0) {
@@ -22,8 +24,15 @@ const AddTodo = ({ onCreate }: AddTodoProps) => {
       return;
     }
 
-    await onCreate(value);
-    setValue(INITIAL_NAME_VALUE);
+    if (submitting) return; // ← защита от быстрого клика
+
+    try {
+      setSubmitting(true);
+      await onCreate(value);
+      setValue(INITIAL_NAME_VALUE);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -31,9 +40,14 @@ const AddTodo = ({ onCreate }: AddTodoProps) => {
       <StyledInput
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        disabled={disabled || submitting}
         placeholder="Введите задачу..."
       />
-      <StyledAddButton onClick={handleAddTodo}>
+
+      <StyledAddButton
+        onClick={handleAddTodo}
+        disabled={disabled || submitting}
+      >
         <AddIcon />
       </StyledAddButton>
     </StyledContainer>

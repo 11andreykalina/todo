@@ -18,9 +18,10 @@ import { toggleTodo, startEdit } from "@/domains/todo/model/todoSlice";
 type TodoItemProps = {
   item: Todo;
   onDelete: (id: number) => Promise<void>;
+  disabled?: boolean;
 };
 
-const TodoItem = ({ item, onDelete }: TodoItemProps) => {
+const TodoItem = ({ item, onDelete, disabled }: TodoItemProps) => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -57,7 +58,7 @@ const TodoItem = ({ item, onDelete }: TodoItemProps) => {
           <EditIcon />
         </StyledButton>
 
-        <StyledButton type="button" onClick={handleRemove}>
+        <StyledButton type="button" onClick={handleRemove} disabled={disabled}>
           <CloseIcon />
         </StyledButton>
       </StyledContainer>

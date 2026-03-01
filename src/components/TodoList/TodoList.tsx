@@ -50,6 +50,9 @@ const TodoList = () => {
   const handleDelete = async (id: number) => {
     await dispatch(deleteTodo(id)).unwrap();
     dispatch(fetchTodos());
+    if (page > 1 && items.length === 1) {
+      dispatch(setPage(1));
+    }
   };
 
   const sortedTodos = [...items].sort((a, b) => {
@@ -65,7 +68,7 @@ const TodoList = () => {
     
     <TodoListContainer>
       {loading && <LoadingOverlay>Загрузка...</LoadingOverlay>}
-      <AddTodo onCreate={handleCreate} />
+      <AddTodo onCreate={handleCreate} disabled={loading}/>
 
       <TodoFilters
         filter={filter}
